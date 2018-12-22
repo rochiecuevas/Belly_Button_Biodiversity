@@ -29,10 +29,10 @@ session = Session(engine)
 app = Flask(__name__)
 
 # Create the database tables
-@app.before_first_request
-def setup():
+# @app.before_first_request
+# def setup():
     # Recreate the database each time 
-    Base.create_all()
+    
 
 @app.route("/")
 def home():
@@ -40,7 +40,7 @@ def home():
 
     return render_template("index.html")   
 
-@app.route("/metadata/")
+@app.route("/metadata")
 def meta():
     """Returns participant metadata as a JSON object."""
 
@@ -60,7 +60,7 @@ def meta():
         "bbtype": df_Meta["BBTYPE"].values.tolist(),
         "wfreq": df_Meta["WFREQ"].values.tolist(),
         "sampling_event": df_Meta["EVENT"].values.tolist(),
-        "location": df_Meta["LOCATION"].values.tolist(),
+        "location": df_Meta["LOCATION"].values.tolist()
     }
 
     return jsonify(trace_Meta)    
@@ -84,12 +84,13 @@ def sample():
     df_Samples_sorted = df_Samples.sort_values(by = ["abundance"], ascending = False)
     df_Samples_sorted.head(10)
 
-    # Prepare data from Samples for graphs and for JSON
+    # Prepare data from Samples for a donut chart and for JSON
     trace_Samples = {
-        labels: df_Samples_sorted.head(10)["otu_id"].values.tolist(),
-        values: df_Samples_sorted.head(10)["abundance"].values.tolist(),
-        type: "pie",
-        hoverinfo: df_Samples_sorted.head(10)["otu_label"].values.tolist(),
+        "labels": df_Samples_sorted.head(10)["otu_id"].values.tolist(),
+        "values": df_Samples_sorted.head(10)["abundance"].values.tolist(),
+        "type": "pie",
+        "hoverinfo": df_Samples_sorted.head(10)["otu_label"].values.tolist()
+        "hole": 0.4
     }
 
     return jsonify(trace_Samples)
