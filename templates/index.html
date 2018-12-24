@@ -24,6 +24,43 @@
                 <label>Select a sample:</label>
                 <br>
                 <select id = "sample"></select>
+                <br>
+                <!-- Insert table containing information about the sample -->
+                <p>Some information about the participants</p>
+                <table id = "sample-metadata">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Participant Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id = "sample-info"> 
+                            <td class = "category">Participant ID:</td>
+                            <td class = "value" id = "id"></td>
+                        </tr>
+                        <tr>
+                            <td class = "category">Participant Gender:</td>
+                            <td class = "value" id = "gender"></td>
+                        </tr>
+                        <tr>
+                            <td class = "category">Participant Age (yrs):</td>
+                            <td class = "value" id = "age"></td>
+                        </tr>
+                        <tr>
+                            <td class = "category">Participant BB Type:</td>
+                            <td class = "value" id = "bbtype"></td>
+                        </tr>
+                        <tr>
+                            <td class = "category">Participant Address:</td>
+                            <td class = "value" id = "location"></td>
+                        </tr>
+                        <tr>
+                            <td class = "category">Sampling Event:</td>
+                            <td class = "value" id = "sampling-event"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class = "col-md-6">
                 <div id = "pie"></div>
