@@ -1,5 +1,6 @@
 # Dependencies for data manipulation
 import pandas as pd
+import simplejson
 
 # Dependencies for SQL
 import sqlalchemy
@@ -74,9 +75,13 @@ def metadata():
         "location": df_Meta["LOCATION"].values.tolist(),
     }
 
-    json_obj = json.dumps(trace_Meta)
+    # Convert dictionary to JSON string
+    jsonStr = simplejson.dumps(trace_Meta, ignore_nan = True)
 
-    return jsonify(json_obj)
+    # Parse JSON string to get JSON object
+    jsonObj = json.loads(jsonStr)
+
+    return jsonify(jsonObj)
 
 @app.route("/")
 def home():
