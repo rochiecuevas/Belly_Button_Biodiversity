@@ -37,25 +37,66 @@ def samples():
     df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
     df_Samples.head() 
 
-
     # Calculate the abundance of each OTU_ID
     df_Samples["abundance"] = df_Samples.sum(axis = 1)
     df_Samples.head()
 
-    # Create a list of columns (sample IDs)
-    col_list = list(df_Samples.columns.values)[2:]
+    df_sorted = df_Samples.sort_values(by = ["abundance"], ascending = False)
 
-    df_sorted = df_Samples.sort_values(by = col_list[-1], ascending = False).head(10)
+    x = df_sorted["otu_id"].values.tolist()
+    y = df_sorted["abundance"].values.tolist()
+    z = df_sorted["otu_label"].values.tolist()
 
     # Prepare data from Samples for graphs and for JSON
     trace_Samples = {
-        "labels": df_sorted["otu_id"].values.tolist(),
-        "values": df_sorted[col_list[-1]].values.tolist(),
-        "type": "pie",
-        "hoverinfo": df_sorted["otu_label"].values.tolist()
+        "labels": x,
+        "values": y,
+        "hoverinfo": z
     }
 
     return jsonify(trace_Samples)
+
+@app.route("/samples/<sample>")
+def samples1(sample):
+    # Create session query that will load the whole Samples table (all columns)
+    qrySamples = session.query(Samples)
+
+    # Convert Samples to a pandas dataframe
+    df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
+    df_Samples.head() 
+
+    # Retain only the column corresponding to the selected sample and information about it (top 10 for pie chart)
+
+    df_sorted = df_Samples[["otu_id", "otu_label",str(sample)]].sort_values(by = [str(sample)], ascending = False)
+
+    x = df_sorted["otu_id"].values.tolist()
+    y = df_sorted[str(sample)].values.tolist()
+    z = df_sorted["otu_label"].values.tolist()
+
+    # Prepare data from Samples for graphs and for JSON
+    trace_Samples = {
+        "sample": sample,
+        "labels": x,
+        "values": y,
+        "hoverinfo": z
+    }
+
+    return jsonify(trace_Samples) 
+
+    # Retain only the column corresponding to the selected sample and information about it (all otu_ids for bar chart)
+
+    df_sorted1 = df_Samples[["otu_id", "otu_label",str(sample)]].sort_values(by = [str(sample)], ascending = False)
+
+    # Prepare data from Samples for graphs and for JSON
+    trace_Samples2 = {
+        "sample": sample,
+        "labels": df_sorted1["otu_id"].values.tolist(),
+        "values": df_sorted1[str(sample)].values.tolist(),
+        "type": "pie",
+        "hoverinfo": df_sorted1["otu_label"].values.tolist()
+    }
+
+    return jsonify(trace_Samples1)  
 
 @app.route("/metadata")
 def metadata():
