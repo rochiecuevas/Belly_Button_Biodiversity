@@ -1,5 +1,6 @@
 # Dependencies for data manipulation
 import pandas as pd
+import numpy as np
 import simplejson
 
 # Dependencies for SQL
