@@ -4,13 +4,37 @@ var urlMeta = "/metadata";
 
 d3.json(urlSamples).then(function(trace){
     var data = [trace];
+    data[0]["type"] = "pie";
+    data[0]["labels"] = data[0]["labels"].slice(0,10);
+    data[0]["values"] = data[0]["values"].slice(0,10);
+    data[0]["hoverinfo"] = data[0]["hoverinfo"].slice(0,10);
     console.log(data);
 
     var layout = {
-        title: "Proportion of the top 10 OTU in Sample xxx"
+        title: `Proportion of the top 10 OTU in all samples`
     }
 
-    Plotly.newPlot("pie", data, layout)
+    Plotly.newPlot("pie", data)
+});
+
+d3.json(urlSamples).then(function(trace){
+    var data = [trace];
+    data[0]["type"] = "bar";
+    data[0]["x"] = data[0]["labels"];
+    data[0]["y"] = data[0]["values"];
+    // data[0]["marker"] = {};
+    // data[0]["marker"]["size"] = data[0]["values"];
+    delete data[0]["labels"];    // Remove the variables for pie chart
+    delete data[0]["values"];    // Remove the variables for pie chart
+    delete data[0]["hoverinfo"]; // Remove the variables for pie chart
+    console.log(data);
+
+    var layout = {
+        xaxis: {title: "OTU_ID"},
+        yaxis: {title: "Frequencies of each OTU_ID"}
+    }
+
+    Plotly.newPlot("bar", data, layout)
 });
 
 d3.json(urlMeta).then(function(trace){
@@ -21,7 +45,6 @@ d3.json(urlMeta).then(function(trace){
 
     // Create a list of sample IDs that the reader can choose from in the select field
     var optionsList = data[0]["sample"]; 
-    optionsList.unshift("All");
     console.log(optionsList);
 
     // Populate the select field with each option from the option list
@@ -32,6 +55,7 @@ d3.json(urlMeta).then(function(trace){
         .text(function(sample){
             return sample;
         })
+        .attr("id", "options")
         
     // Fill in the table with selected values
     // (1) Selection of a sample
@@ -41,7 +65,7 @@ d3.json(urlMeta).then(function(trace){
 
         // (2) Change the url for the metadata (include sample)
         var urlMeta1 = `/metadata/${selection}`;
-        console.log(urlMeta1)
+        console.log(urlMeta1);
 
         // (3) Use the new url to populate the HTML table
         d3.json(urlMeta1).then(function(trace){
@@ -63,6 +87,48 @@ d3.json(urlMeta).then(function(trace){
                 tdList[i].text(data[0][catList[i]])
             };
             });
+
+        // (4) Change the url for the sample data
+        var urlSamples1 = `/samples/${selection}`;
+        console.log(urlSamples1);
+
+        // (5) Use the new URL to create the pie chart
+        d3.json(urlSamples1).then(function(trace){
+            var data = [trace];
+            data[0]["type"] = "pie";
+            data[0]["labels"] = data[0]["labels"].slice(0,10);
+            data[0]["values"] = data[0]["values"].slice(0,10);
+            data[0]["hoverinfo"] = data[0]["hoverinfo"].slice(0,10);
+            console.log(data);
+        
+            var layout = {
+                title: `Proportion of the top 10 OTU in Sample ${selection}`
+            }
+        
+            Plotly.newPlot("pie", data, layout)
+        });
+
+        // (6) Use the new URL to create a bar plot
+        // d3.json(urlSamples1).then(function(trace){
+        //     var data = [trace];
+        //     data[0]["type"] = "bar";
+        //     data[0]["x"] = data[0]["labels"].slice(0,10);
+        //     data[0]["y"] = data[0]["values"].slice(0,10);
+        //     // data[0]["marker"] = {};
+        //     // data[0]["marker"]["size"] = data[0]["values"];
+        //     delete data[0]["labels"];    // Remove the variables for pie chart
+        //     delete data[0]["values"];    // Remove the variables for pie chart
+        //     delete data[0]["hoverinfo"]; // Remove the variables for pie chart
+        //     console.log(data);
+        
+        //     var layout = {
+        //         title: `Proportion of the top 10 OTU in Sample ${selection}`
+        //         xaxis: {title: "OTU_ID"},
+        //         yaxis: {title: "Frequencies of each OTU_ID"}
+        //     }
+        
+        //     Plotly.newPlot("bar", data, layout)
+        // });
 
     };
     sampleID.on("change", handleChange);
