@@ -32,6 +32,34 @@ d3.json(urlMeta).then(function(trace){
             return sample;
         })
      
-    // Fill in the table
+    // Fill in the table with selected values
+    // (1) Selection of a sample
+    function handleChange(){
+        var selection = sampleID.property("value");
+        console.log(selection);
+
+        // (2) Filtering the table based on the values from the selection
+        // Since the JSON object is a dictionary of lists, the index of the selected value must be determined
+
+        var selIndex = optionsList.indexOf(selection)
+
+        // (3) Get the values that match the index of the selected item in the array
+        var tdAge = d3.select("#age");
+        var tdGender = d3.select("#gender");
+        var tdEvent = d3.select("#sampling-event");
+        var tdBBType = d3.select("#bbtype");
+
+        var catList = ["age", "gender", "sampling_event", "bbtype"]; // List of categories in the JSON object
+        var tdList = [tdAge, tdGender, tdEvent, tdBBType]; // List of cells to be filled in
+
+        for (var i = 0; i < tdList.length; i ++):
+            console.log(tdList[i]);
+            tdList[i].text = data[catList[i][selIndex]] // The value of td is the value in data that matches the selIndex
+
+
+        };
+        sampleID.on("change", handleChange);
+
     
+
 });
