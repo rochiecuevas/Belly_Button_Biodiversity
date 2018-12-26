@@ -22,6 +22,8 @@ d3.json(urlSamples).then(function(trace){
     data[0]["type"] = "bar";
     data[0]["x"] = data[0]["labels"];
     data[0]["y"] = data[0]["values"];
+    data[0]["x"] = data[0]["x"].slice(0,10);
+    data[0]["y"] = data[0]["y"].slice(0,10);
     // data[0]["marker"] = {};
     // data[0]["marker"]["size"] = data[0]["values"];
     delete data[0]["labels"];    // Remove the variables for pie chart
@@ -29,14 +31,15 @@ d3.json(urlSamples).then(function(trace){
     delete data[0]["hoverinfo"]; // Remove the variables for pie chart
     console.log(data);
 
-    var layout = {
-        xaxis: {title: "OTU_ID"},
-        yaxis: {title: "Frequencies of each OTU_ID"}
-    }
+    // var layout = {
+    //     xaxis: {title: "OTU_ID"},
+    //     yaxis: {title: "Frequencies of each OTU_ID"}
+    // }
 
-    Plotly.newPlot("bar", data, layout)
+    // Plotly.newPlot("bar", data, layout)
 });
 
+// When a selection has been made
 d3.json(urlMeta).then(function(trace){
     var data = [trace];
     console.log(data);
@@ -103,32 +106,11 @@ d3.json(urlMeta).then(function(trace){
         
             var layout = {
                 title: `Proportion of the top 10 OTU in Sample ${selection}`
-            }
+            };
         
             Plotly.newPlot("pie", data, layout)
         });
 
-        // (6) Use the new URL to create a bar plot
-        // d3.json(urlSamples1).then(function(trace){
-        //     var data = [trace];
-        //     data[0]["type"] = "bar";
-        //     data[0]["x"] = data[0]["labels"].slice(0,10);
-        //     data[0]["y"] = data[0]["values"].slice(0,10);
-        //     // data[0]["marker"] = {};
-        //     // data[0]["marker"]["size"] = data[0]["values"];
-        //     delete data[0]["labels"];    // Remove the variables for pie chart
-        //     delete data[0]["values"];    // Remove the variables for pie chart
-        //     delete data[0]["hoverinfo"]; // Remove the variables for pie chart
-        //     console.log(data);
-        
-        //     var layout = {
-        //         title: `Proportion of the top 10 OTU in Sample ${selection}`
-        //         xaxis: {title: "OTU_ID"},
-        //         yaxis: {title: "Frequencies of each OTU_ID"}
-        //     }
-        
-        //     Plotly.newPlot("bar", data, layout)
-        // });
 
     };
     sampleID.on("change", handleChange);
