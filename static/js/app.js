@@ -35,27 +35,29 @@ d3.json(urlMeta).then(function(trace){
     // Fill in the table with selected values
     // (1) Selection of a sample
     function handleChange(){
-        var selection = sampleID.property("value");
-        console.log(selection);
+        var selection = sampleID.property("value"); // numbers
+        console.log(selection); // number has been converted to string
 
         // (2) Filtering the table based on the values from the selection
         // Since the JSON object is a dictionary of lists, the index of the selected value must be determined
 
-        var selIndex = optionsList.indexOf(selection)
+        var selIndex = optionsList.indexOf(Number(selection)) // converts the string to a number
+        console.log(selIndex)
 
         // (3) Get the values that match the index of the selected item in the array
         var tdAge = d3.select("#age");
         var tdGender = d3.select("#gender");
         var tdEvent = d3.select("#sampling-event");
         var tdBBType = d3.select("#bbtype");
+        var tdLocation = d3.select("#location");
+        var tdID = d3.select("#id");
 
-        var catList = ["age", "gender", "sampling_event", "bbtype"]; // List of categories in the JSON object
-        var tdList = [tdAge, tdGender, tdEvent, tdBBType]; // List of cells to be filled in
-
-        for (var i = 0; i < tdList.length; i ++):
-            console.log(tdList[i]);
-            tdList[i].text = data[catList[i][selIndex]] // The value of td is the value in data that matches the selIndex
-
+        tdAge.text(data[0]["age"][selIndex]);
+        tdGender.text(data[0]["gender"][selIndex]);
+        tdEvent.text(data[0]["sampling_event"][selIndex]);
+        tdBBType.text(data[0]["bbtype"][selIndex]);
+        tdLocation.text(data[0]["location"][selIndex]);
+        tdID.text(data[0]["sample"][selIndex]);
 
         };
         sampleID.on("change", handleChange);
