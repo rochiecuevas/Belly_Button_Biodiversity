@@ -37,16 +37,20 @@ def samples():
     df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
     df_Samples.head() 
 
+
     # Calculate the abundance of each OTU_ID
     df_Samples["abundance"] = df_Samples.sum(axis = 1)
     df_Samples.head()
 
-    df_sorted = df_Samples.sort_values(by = ["abundance"], ascending = False).head(10)
+    # Create a list of columns (sample IDs)
+    col_list = list(df_Samples.columns.values)[2:]
+
+    df_sorted = df_Samples.sort_values(by = col_list[-1], ascending = False).head(10)
 
     # Prepare data from Samples for graphs and for JSON
     trace_Samples = {
         "labels": df_sorted["otu_id"].values.tolist(),
-        "values": df_sorted["abundance"].values.tolist(),
+        "values": df_sorted[col_list[-1]].values.tolist(),
         "type": "pie",
         "hoverinfo": df_sorted["otu_label"].values.tolist()
     }
@@ -73,6 +77,34 @@ def metadata():
         "wfreq": df_Meta["WFREQ"].values.tolist(),
         "sampling_event": df_Meta["EVENT"].values.tolist(),
         "location": df_Meta["LOCATION"].values.tolist(),
+    }
+
+    # Convert dictionary to JSON string
+    jsonStr = simplejson.dumps(trace_Meta, ignore_nan = True)
+
+    # Parse JSON string to get JSON object
+    jsonObj = json.loads(jsonStr)
+
+    return jsonify(jsonObj)
+
+@app.route("/metadata/<sample>")
+def metadata1(sample):
+
+    # Create a session query to get data for specific columns of the Metadata table
+    sel = [Metadata.sample, Metadata.ETHNICITY, Metadata.AGE, Metadata.GENDER, Metadata.BBTYPE, Metadata.WFREQ, Metadata.EVENT, Metadata.LOCATION]
+
+    results = session.query(*sel).filter(Metadata.sample == sample).all()
+
+    # Prepare the trace from Metadata for graphs and for JSON
+    trace_Meta = {
+        "sample": results[0][0],
+        "ethnicity": results[0][1],
+        "age": results[0][2],
+        "gender": results[0][3],
+        "bbtype": results[0][4],
+        "wfreq": results[0][5],
+        "sampling_event": results[0][6],
+        "location": results[0][7]
     }
 
     # Convert dictionary to JSON string
