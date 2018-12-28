@@ -23,7 +23,9 @@
             <div class = "col-md-4">
                 <label>Select a sample:</label>
                 <br>
-                <select id = "sample"></select>
+                <select id = "sample">
+                    <option disabled = "disabled">All</option>
+                </select>
                 <br>
                 <!-- Insert table containing information about the sample -->
                 <p>Some information about the participants</p>
@@ -73,7 +75,7 @@
         </div>
     </div>
     <!-- More JavaScript and CSS script -->
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app1.js') }}"></script>
     <script src="{{ url_for('static', filename='css/main.css') }}"></script>
 </body>
 </html>
