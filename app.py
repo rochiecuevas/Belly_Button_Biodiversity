@@ -26,20 +26,21 @@ Samples = Base.classes.samples
 # Create a session (link) between Python and the sqlite database
 session = Session(engine)
 
+# Create session query that will load the whole Samples table (all columns)
+qrySamples = session.query(Samples)
+
+# Convert Samples to a pandas dataframe
+df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
+
+# Drop rows with at least one element missing
+df_Samples = df_Samples.dropna()
+df_Samples.head() 
+
 # Flask set-up
 app = Flask(__name__)
 
 @app.route("/samples")
 def samples():
-    # Create session query that will load the whole Samples table (all columns)
-    qrySamples = session.query(Samples)
-
-    # Convert Samples to a pandas dataframe
-    df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
-
-    # Drop rows with at least one element missing
-    df_Samples = df_Samples.dropna()
-    df_Samples.head() 
 
     # Calculate the abundance of each OTU_ID
     df_Samples["abundance"] = df_Samples.sum(axis = 1)
@@ -50,27 +51,20 @@ def samples():
     x = df_sorted["otu_id"].values.tolist()
     y = df_sorted["abundance"].values.tolist()
     z = df_sorted["otu_label"].values.tolist()
+    y2 = [x/1000 for x in df_sorted["abundance"].values]
 
     # Prepare data from Samples for graphs and for JSON
     trace_Samples = {
         "labels": z,
         "values": y,
-        "labels2": x
+        "labels2": x,
+        "marker_size": y2
     }
 
     return jsonify(trace_Samples)
 
 @app.route("/samples/<sample>")
 def samples1(sample):
-    # Create session query that will load the whole Samples table (all columns)
-    qrySamples = session.query(Samples)
-
-    # Convert Samples to a pandas dataframe
-    df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
-
-    # Drop rows with at least one element missing
-    df_Samples = df_Samples.dropna()
-    df_Samples.head() 
 
     # Retain only the column corresponding to the selected sample and information about it (top 10 for pie chart)
 
@@ -85,7 +79,8 @@ def samples1(sample):
         "sample": sample,
         "labels": z,
         "values": y,
-        "labels2": x
+        "labels2": x,
+        "marker_size": y
     }
 
     return jsonify(trace_Samples) 

@@ -20,9 +20,11 @@ d3.json(urlSamples).then(function(trace){
 
 d3.json(urlSamples).then(function(trace){
     var data = [trace];
-    data[0]["type"] = "bar";
+    data[0]["type"] = "scatter";
+    data[0]["mode"] = "markers";
     data[0]["x"] = data[0]["labels2"];
     data[0]["y"] = data[0]["values"];
+    data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
     data[0]["x"] = data[0]["x"].slice(0,20);
     data[0]["y"] = data[0]["y"].slice(0,20);
     delete data[0]["labels"];    // Remove the variables for pie chart
@@ -117,9 +119,11 @@ d3.json(urlMeta).then(function(trace){
         // (6) Us the new URL to create a bar chart
         d3.json(urlSamples1).then(function(trace){
             var data = [trace];
-            data[0]["type"] = "bar";
+            data[0]["type"] = "scatter";
+            data[0]["mode"] = "markers";
             data[0]["x"] = data[0]["labels2"];
             data[0]["y"] = data[0]["values"];
+            data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
             data[0]["x"] = data[0]["x"].slice(0,20);
             data[0]["y"] = data[0]["y"].slice(0,20);
             delete data[0]["labels"];    // Remove the variables for pie chart
