@@ -53,9 +53,8 @@ def samples():
 
     # Prepare data from Samples for graphs and for JSON
     trace_Samples = {
-        "labels": x,
+        "labels": z,
         "values": y,
-        "hoverinfo": z
     }
 
     return jsonify(trace_Samples)
