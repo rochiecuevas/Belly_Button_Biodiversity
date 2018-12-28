@@ -36,6 +36,9 @@ def samples():
 
     # Convert Samples to a pandas dataframe
     df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
+
+    # Drop rows with at least one element missing
+    df_Samples = df_Samples.dropna()
     df_Samples.head() 
 
     # Calculate the abundance of each OTU_ID
@@ -64,6 +67,9 @@ def samples1(sample):
 
     # Convert Samples to a pandas dataframe
     df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
+
+    # Drop rows with at least one element missing
+    df_Samples = df_Samples.dropna()
     df_Samples.head() 
 
     # Retain only the column corresponding to the selected sample and information about it (top 10 for pie chart)
