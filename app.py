@@ -55,6 +55,7 @@ def samples():
     trace_Samples = {
         "labels": z,
         "values": y,
+        "labels2": x
     }
 
     return jsonify(trace_Samples)
@@ -82,9 +83,9 @@ def samples1(sample):
     # Prepare data from Samples for graphs and for JSON
     trace_Samples = {
         "sample": sample,
-        "labels": x,
+        "labels": z,
         "values": y,
-        "hoverinfo": z
+        "labels2": x
     }
 
     return jsonify(trace_Samples) 
@@ -99,10 +100,9 @@ def samples1(sample):
         "labels": df_sorted1["otu_id"].values.tolist(),
         "values": df_sorted1[str(sample)].values.tolist(),
         "type": "pie",
-        "hoverinfo": df_sorted1["otu_label"].values.tolist()
     }
 
-    return jsonify(trace_Samples1)  
+    return jsonify(trace_Samples2)  
 
 @app.route("/metadata")
 def metadata():

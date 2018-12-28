@@ -7,11 +7,12 @@ d3.json(urlSamples).then(function(trace){
     data[0]["type"] = "pie";
     data[0]["labels"] = data[0]["labels"].slice(0,10);
     data[0]["values"] = data[0]["values"].slice(0,10);
-    data[0]["hoverinfo"] = data[0]["hoverinfo"].slice(0,10);
+    data[0]["hoverinfo"] = "label";
     console.log(data);
 
     var layout = {
-        title: `Proportion of the top 10 OTU in all samples`
+        title: `Proportion of the top 10 OTU in all samples`,
+        showlegend: false
     }
 
     Plotly.newPlot("pie", data, layout)
@@ -20,17 +21,16 @@ d3.json(urlSamples).then(function(trace){
 d3.json(urlSamples).then(function(trace){
     var data = [trace];
     data[0]["type"] = "bar";
-    data[0]["x"] = data[0]["labels"];
+    data[0]["x"] = data[0]["labels2"];
     data[0]["y"] = data[0]["values"];
-    data[0]["x"] = data[0]["x"].slice(0,10);
-    data[0]["y"] = data[0]["y"].slice(0,10);
+    data[0]["x"] = data[0]["x"].slice(0,20);
+    data[0]["y"] = data[0]["y"].slice(0,20);
     delete data[0]["labels"];    // Remove the variables for pie chart
     delete data[0]["values"];    // Remove the variables for pie chart
-    delete data[0]["hoverinfo"]; // Remove the variables for pie chart
     console.log(data);
 
     var layout = {
-        title: "Frequencies of the top 10 OTUs",
+        title: "Frequencies of the top 20 OTUs",
         xaxis: {title: "OTU_ID"},
         yaxis: {title: "Frequencies of each OTU_ID"}
     }
@@ -100,11 +100,12 @@ d3.json(urlMeta).then(function(trace){
             data[0]["type"] = "pie";
             data[0]["labels"] = data[0]["labels"].slice(0,10);
             data[0]["values"] = data[0]["values"].slice(0,10);
-            data[0]["hoverinfo"] = data[0]["hoverinfo"].slice(0,10);
+            data[0]["hoverinfo"] = "label";
             console.log(data);
         
             var layout = {
-                title: `Proportion of the top 10 OTU in Sample ${selection}`
+                title: `Proportion of the top 10 OTU in Sample ${selection}`,
+                showlegend: false
             };
         
             Plotly.newPlot("pie", data, layout)
@@ -114,17 +115,16 @@ d3.json(urlMeta).then(function(trace){
         d3.json(urlSamples1).then(function(trace){
             var data = [trace];
             data[0]["type"] = "bar";
-            data[0]["x"] = data[0]["labels"];
+            data[0]["x"] = data[0]["labels2"];
             data[0]["y"] = data[0]["values"];
-            data[0]["x"] = data[0]["x"].slice(0,10);
-            data[0]["y"] = data[0]["y"].slice(0,10);
+            data[0]["x"] = data[0]["x"].slice(0,20);
+            data[0]["y"] = data[0]["y"].slice(0,20);
             delete data[0]["labels"];    // Remove the variables for pie chart
             delete data[0]["values"];    // Remove the variables for pie chart
-            delete data[0]["hoverinfo"]; // Remove the variables for pie chart
             console.log(data);
 
             var layout = {
-                title: `Frequencies of the top 10 OTUs in Sample ${selection}`,
+                title: `Frequencies of the top 20 OTUs in Sample ${selection}`,
                 xaxis: {title: "OTU_ID"},
                 yaxis: {title: "Frequencies of each OTU_ID"}
             };
