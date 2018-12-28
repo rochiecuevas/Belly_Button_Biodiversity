@@ -59,6 +59,9 @@ d3.json(urlMeta).then(function(trace){
         })
         .attr("id", "options")
 
+    // Disable the "All" option
+    document.getElementById("All").disabled = true;    
+
     // Fill in the table with selected values
     // (1) Selection of a sample
     function handleChange(){
