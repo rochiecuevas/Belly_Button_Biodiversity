@@ -11,7 +11,7 @@ d3.json(urlSamples).then(function(trace){
     console.log(data);
 
     var layout = {
-        title: `Proportion of the top 10 OTU in all samples`,
+        title: `Proportions of the top 10 OTU in all samples`,
         showlegend: false
     }
 
@@ -40,11 +40,179 @@ d3.json(urlSamples).then(function(trace){
     Plotly.newPlot("bar", data, layout)
 });
 
-// When a selection has been made
+// Use the metadata
 d3.json(urlMeta).then(function(trace){
     var data = [trace];
     console.log(data);
 
+    // Create a histogram for age
+    var trace_age = {
+        x: data[0]["age"],
+        type: "histogram"};
+
+    var data_age = [trace_age];
+
+    var layout_age = {
+        xaxis: {title: "Age"},
+        yaxis: {title: "Frequency"}
+    };
+
+    Plotly.newPlot("hist_age", data_age, layout_age);
+
+    // Create a histogram for wash frequency
+    var trace_wash = {
+        x: data[0]["wfreq"],
+        type: "histogram"};
+
+    var data_wash = [trace_wash];
+
+    var layout_wash = {
+        xaxis: {title: "Washing Frequency"},
+        yaxis: {title: "Frequency"}
+    };
+
+    Plotly.newPlot("hist_wash", data_wash, layout_wash);
+
+    // Create a bar graph for males and females
+    var male = [];
+    var female = [];
+    var gender = data[0]["gender"];
+
+    for (var i = 0; i < gender.length; i ++){
+        if ((gender[i] == "F")|| (gender[i] == "f")){
+            female.push(gender[i])
+        } else if ((gender[i] == "M")|| (gender[i] == "m")){
+            male.push(gender[i])
+        };   
+    };
+    console.log(male);
+    console.log(female); 
+
+    var trace_gender = {
+        x: ["male", "female"],
+        y: [male.length, female.length],
+        type: "bar"
+    };
+    console.log(trace_gender);
+
+    var data_gender = [trace_gender];
+
+    var layout_gender = {
+        xaxis: {title: "Gender"},
+        yaxis: {title: "Frequency"}
+    };
+
+    Plotly.newPlot("bar_gender", data_gender, layout_gender);    
+
+    // Create a bar graph for events
+    var event = data[0]["sampling_event"];
+    console.log(event);
+
+    // Create a function that counts events
+    event_count = {};
+    
+    for (var j = 0; j < event.length; j ++){
+        if (event_count[event[j]]){
+            event_count[event[j]] += 1;
+        } else {
+            event_count[event[j]] = 1;
+        }
+    };
+        
+    console.log(event_count);
+    
+    // Create lists of events and counts for the bar graph of events
+    var events = [];
+    var counts = [];
+   
+    Object.entries(event_count).forEach(function([key,value]){
+        events.push(key);
+        counts.push(value);
+    });
+
+    var events2 = [];
+    for (var k = 0; k < events.length; k ++){
+        events2.push(events[k].replace("BellyButtons", ""));
+    }
+
+    console.log(events);
+    console.log(counts);
+    console.log(events2);
+
+    // Create bar graphs
+    var trace_events = {
+        x: events2,
+        y: counts,
+        type: "bar"
+    };
+
+    var data_events = [trace_events];
+    console.log(data_events);
+
+    var layout_events = {
+        xaxis: {
+            title: "Event",
+            automargin: true
+        },
+        yaxis: {title: "Number of volunteers"}
+    };
+
+    Plotly.newPlot("bar_event", data_events, layout_events);
+
+    // Create a bar graph for ethnicities
+    var ethnicities = data[0]["ethnicity"];
+    console.log(ethnicities);
+
+    // Create a function that counts events
+    ethnicity_count = {};
+
+    for (var j = 0; j < ethnicities.length; j ++){
+        if (ethnicity_count[ethnicities[j]]){
+            ethnicity_count[ethnicities[j]] += 1;
+        } else {
+            ethnicity_count[ethnicities[j]] = 1;
+        }
+    };
+        
+    console.log(ethnicity_count);
+
+    // Create lists of events and counts for the bar graph of events
+    var races = [];
+    var raceCounts = [];
+
+    Object.entries(ethnicity_count).forEach(function([key,value]){
+        races.push(key);
+        raceCounts.push(value);
+    });
+
+    console.log(races);
+    console.log(raceCounts);
+
+    // Create bar graphs
+    var trace_ethnicities = {
+        x: races,
+        y: raceCounts,
+        type: "bar"
+    };
+
+    var data_ethnicities = [trace_ethnicities];
+    console.log(data_ethnicities);
+
+    var layout_ethnicities = {
+        xaxis: {
+            title: "Ethnicity",
+            automargin: true
+        },
+        yaxis: {title: "Number of volunteers"}
+    };
+
+    Plotly.newPlot("bar_ethnicity", data_ethnicities, layout_ethnicities);
+
+
+
+
+    // When a selection has been made
+    // Define a variable for sample/participant ID
     var sampleID = d3.select("#sample");
 
     // Create a list of sample IDs that the reader can choose from in the select field
@@ -109,14 +277,14 @@ d3.json(urlMeta).then(function(trace){
             console.log(data);
         
             var layout = {
-                title: `Proportion of the top 10 OTU in Sample ${selection}`,
+                title: `Proportions of the top 10 OTU in Sample ${selection}`,
                 showlegend: false
             };
         
             Plotly.newPlot("pie", data, layout)
         });
 
-        // (6) Us the new URL to create a bar chart
+        // (6) Use the new URL to create a bubble chart
         d3.json(urlSamples1).then(function(trace){
             var data = [trace];
             data[0]["type"] = "scatter";
@@ -138,7 +306,7 @@ d3.json(urlMeta).then(function(trace){
         
             Plotly.newPlot("bar", data, layout)
         });
-        
+
     };
     sampleID.on("change", handleChange);
 

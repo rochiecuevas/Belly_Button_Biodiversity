@@ -157,6 +157,7 @@ def metadata1(sample):
 
     return jsonify(jsonObj)
 
+
 @app.route("/")
 def home():
     message = "Belly Button Biodiversity"
