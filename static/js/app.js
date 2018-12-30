@@ -53,7 +53,11 @@ d3.json(urlMeta).then(function(trace){
     // Create a histogram for age
     var trace_age = {
         x: data[0]["age"],
-        type: "histogram"};
+        type: "histogram",
+        marker: {
+            color: "green"
+        }
+    };
 
     var data_age = [trace_age];
 
@@ -67,7 +71,11 @@ d3.json(urlMeta).then(function(trace){
     // Create a histogram for wash frequency
     var trace_wash = {
         x: data[0]["wfreq"],
-        type: "histogram"};
+        type: "histogram",
+        marker: {
+            color: "orange"
+        }
+    };
 
     var data_wash = [trace_wash];
 
@@ -96,7 +104,10 @@ d3.json(urlMeta).then(function(trace){
     var trace_gender = {
         x: ["male", "female"],
         y: [male.length, female.length],
-        type: "bar"
+        type: "bar",
+        marker: {
+            color: "indigo"
+        }
     };
     console.log(trace_gender);
 
@@ -148,7 +159,10 @@ d3.json(urlMeta).then(function(trace){
     var trace_events = {
         x: events2,
         y: counts,
-        type: "bar"
+        type: "bar",
+        marker: {
+            color: "cyan"
+        }
     };
 
     var data_events = [trace_events];
@@ -197,7 +211,10 @@ d3.json(urlMeta).then(function(trace){
     var trace_ethnicities = {
         x: races,
         y: raceCounts,
-        type: "bar"
+        type: "bar",
+        marker: {
+            color: "grey"
+        }
     };
 
     var data_ethnicities = [trace_ethnicities];
