@@ -24,9 +24,11 @@ d3.json(urlSamples).then(function(trace){
     data[0]["mode"] = "markers";
     data[0]["x"] = data[0]["labels2"];
     data[0]["y"] = data[0]["values"];
+    data[0]["text"] = data[0]["labels"];
     data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
-    data[0]["x"] = data[0]["x"].slice(0,20);
-    data[0]["y"] = data[0]["y"].slice(0,20);
+    data[0]["x"] = data[0]["x"].slice(0,20); // Retain only the top 20 OTUs
+    data[0]["y"] = data[0]["y"].slice(0,20); // Retain only the top 20 OTUs
+    data[0]["text"] = data[0]["labels"].slice(0,20); // Retain only the top 20 OTUs
     delete data[0]["labels"];    // Remove the variables for pie chart
     delete data[0]["values"];    // Remove the variables for pie chart
     console.log(data);
@@ -37,7 +39,7 @@ d3.json(urlSamples).then(function(trace){
         yaxis: {title: "Frequencies of each OTU_ID"}
     }
 
-    Plotly.newPlot("bar", data, layout)
+    Plotly.newPlot("bubble", data, layout)
 });
 
 // Use the metadata
@@ -291,9 +293,11 @@ d3.json(urlMeta).then(function(trace){
             data[0]["mode"] = "markers";
             data[0]["x"] = data[0]["labels2"];
             data[0]["y"] = data[0]["values"];
+            data[0]["text"] = data[0]["labels"];
             data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
-            data[0]["x"] = data[0]["x"].slice(0,20);
-            data[0]["y"] = data[0]["y"].slice(0,20);
+            data[0]["x"] = data[0]["x"].slice(0,20); // Retain only the top 20 OTUs
+            data[0]["y"] = data[0]["y"].slice(0,20); // Retain only the top 20 OTUs
+            data[0]["text"] = data[0]["labels"].slice(0,20); // Retain only the top 20 OTUs
             delete data[0]["labels"];    // Remove the variables for pie chart
             delete data[0]["values"];    // Remove the variables for pie chart
             console.log(data);
@@ -304,7 +308,7 @@ d3.json(urlMeta).then(function(trace){
                 yaxis: {title: "Frequencies of each OTU_ID"}
             };
         
-            Plotly.newPlot("bar", data, layout)
+            Plotly.newPlot("bubble", data, layout)
         });
 
     };
