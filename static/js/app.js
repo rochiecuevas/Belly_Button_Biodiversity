@@ -25,7 +25,10 @@ d3.json(urlSamples).then(function(trace){
     data[0]["x"] = data[0]["labels2"];
     data[0]["y"] = data[0]["values"];
     data[0]["text"] = data[0]["labels"];
-    data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
+    data[0]["marker"] ={
+        "size": data[0]["marker_size"].slice(0,20),
+        "color":data[0]["labels2"].slice(0,20)
+        };
     data[0]["x"] = data[0]["x"].slice(0,20); // Retain only the top 20 OTUs
     data[0]["y"] = data[0]["y"].slice(0,20); // Retain only the top 20 OTUs
     data[0]["text"] = data[0]["labels"].slice(0,20); // Retain only the top 20 OTUs
@@ -211,8 +214,6 @@ d3.json(urlMeta).then(function(trace){
     Plotly.newPlot("bar_ethnicity", data_ethnicities, layout_ethnicities);
 
 
-
-
     // When a selection has been made
     // Define a variable for sample/participant ID
     var sampleID = d3.select("#sample");
@@ -294,7 +295,10 @@ d3.json(urlMeta).then(function(trace){
             data[0]["x"] = data[0]["labels2"];
             data[0]["y"] = data[0]["values"];
             data[0]["text"] = data[0]["labels"];
-            data[0]["marker"] ={"size": data[0]["marker_size"].slice(0,20)};
+            data[0]["marker"] ={
+                "size": data[0]["marker_size"].slice(0,20),
+                "color": data[0]["labels2"].slice(0,20)
+                };
             data[0]["x"] = data[0]["x"].slice(0,20); // Retain only the top 20 OTUs
             data[0]["y"] = data[0]["y"].slice(0,20); // Retain only the top 20 OTUs
             data[0]["text"] = data[0]["labels"].slice(0,20); // Retain only the top 20 OTUs
