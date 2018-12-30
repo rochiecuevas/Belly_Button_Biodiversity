@@ -36,6 +36,13 @@ df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
 df_Samples = df_Samples.dropna()
 df_Samples.head() 
 
+# Create a session query to get data for specific columns of the Metadata table
+qryMeta = session.query(Metadata)
+
+# Convert the query into a pandas dataframe
+df_Meta = pd.read_sql(qryMeta.statement, qryMeta.session.bind)
+df_Meta.head()
+
 # Flask set-up
 app = Flask(__name__)
 
@@ -101,13 +108,6 @@ def samples1(sample):
 
 @app.route("/metadata")
 def metadata():
-
-    # Create a session query to get data for specific columns of the Metadata table
-    qryMeta = session.query(Metadata)
-
-    # Convert the query into a pandas dataframe
-    df_Meta = pd.read_sql(qryMeta.statement, qryMeta.session.bind)
-    df_Meta.head()
 
     # Prepare the trace from Metadata for graphs and for JSON
     trace_Meta = {
