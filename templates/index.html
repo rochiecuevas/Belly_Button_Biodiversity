@@ -7,7 +7,6 @@
     
     <!-- CSS>Bootstrap script -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     <!-- JavaScript script (d3.js and plotly.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
@@ -15,16 +14,26 @@
     
     <title>Belly Button Microbiome</title>
 </head>
-<body>
-    <div class = "container">
-        <div class = "row">
-            <h1>{{ message }}</h1>
-        </div>
-        <div class = "row">
-            <div class = "col-md-8">
-                <h3>About the Belly Button Biodiversity Project</h3>
-                <p>The belly button is teeming with microorganisms! In 2011–2012, North Carolina State University's Rob Dunn Lab decided to unravel the microbiome mysteries of the navel. It swabbed the belly buttons of hundreds of volunteers. The swabs were plated and the microorganisms were allowed to grow, providing a "portrait" of the microorganisms that live there. Then, the lab took a step further: scientists used DNA fingerprinting technology to identify the microorganisms at the species level. Over 3600 species (OTUs) were reported in just 153 volunteers! Explore the dashboard and see the types of microorganisms that were found. Then choose a participant to figure out which microbes teeming in their belly buttons.</p>
+<body style = "background-color:white;">
+        <div class = "container">
+            <div class = "row">
+                <h1>{{ message }}</h1>
+            </div>    
+            <div class = "row">
+                    <h3>About the Belly Button Biodiversity Project</h3>
+                <div class = "col-md-4">
+                    <p>The belly button is teeming with microorganisms! In 2011–2012, North Carolina State University's <a href = "http://robdunnlab.com/projects/belly-button-biodiversity/">Rob Dunn Lab</a> decided to unravel the microbiome mysteries of the navel. It swabbed the belly buttons of hundreds of volunteers. The swabs were plated  </p>
+                </div>  
+                <div class = "col-md-4">
+                    <p>and the microorganisms were allowed to grow, providing a "portrait" of the microorganisms that live there. Then, the lab took a step further: scientists used DNA fingerprinting technology to identify the microorganisms at the species level, based on the gene that </p>
                 </div>
+                <div class = "col-md-4">
+                    <p>expresses the 16S RNA. Over 3600 species (OTUs) were reported in just 153 volunteers! Explore the dashboard and see the types of microorganisms that were found. Then choose a participant to figure out which microbes teeming in their belly buttons.</p>
+                </div>
+        </div>
+        <hr>
+    <div class = "container">    
+        <div class = "row">
             <div class = "col-md-4">
                 <label>Select a sample:</label>
                 <br>
@@ -32,47 +41,50 @@
                     <option id = "All">All</option>
                 </select>
                 <br>
+                <br>
                 <!-- Insert table containing information about the sample -->
                 <p>Some information about the participants</p>
                 <table id = "sample-metadata">
                     <thead>
                         <tr>
-                            <th>Category</th>
+                            <th></th>
                             <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr id = "Sample-info"> 
-                            <td class = "category">Participant ID:</td>
+                            <td class = "category">ID:</td>
                             <td class = "value" id = "id"></td>
                         </tr>
                         <tr id = "Gender">
-                            <td class = "category">Participant Gender:</td>
+                            <td class = "category">Gender:</td>
                             <td class = "value" id = "gender"></td>
                         </tr>
                         <tr id = "Age">
-                            <td class = "category">Participant Age (yrs):</td>
+                            <td class = "category">Age (yrs):</td>
                             <td class = "value" id = "age"></td>
                         </tr>
                         <tr id = "BBtype">
-                            <td class = "category">Participant BB Type:</td>
+                            <td class = "category">BB Type:</td>
                             <td class = "value" id = "bbtype"></td>
                         </tr>
                         <tr id = "Address">
-                            <td class = "category">Participant Address:</td>
+                            <td class = "category">Address:</td>
                             <td class = "value" id = "location"></td>
                         </tr>
                         <tr id = "Event">
-                            <td class = "category">Sampling Event:</td>
+                            <td class = "category">Event:</td>
                             <td class = "value" id = "sampling-event"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-        </div>
-        <hr>
-        <div class = "row">
+            <div class = "col-md-8">
+                    <img src="{{url_for('static', filename='Images/bacterial_culture.jpg')}}" width = 70%/>
+            </div>
+        </div>  
+        <hr>  
+        <div class = "row">    
             <div class = "col-md-6">
                 <div id = "pie"></div>
             </div>
@@ -110,6 +122,8 @@
         </div>
     </div>
     <!-- More JavaScript and CSS script -->
-    <script src="{{ url_for('static', filename='js/app1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app1.js') }}">
+        document.getElementById("sample-metadata").style.borderColor = "grey";
+    </script>
 </body>
 </html>
