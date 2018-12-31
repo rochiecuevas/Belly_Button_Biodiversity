@@ -15,11 +15,15 @@
     <title>Belly Button Microbiome</title>
 </head>
 <body style = "background-color:white;">
-        <div class = "container">
-            <div class = "row">
+        <div class = "jumbotron">
+            <div class = "container"> 
                 <h1>{{ message }}</h1>
-            </div>    
+                <p>Do you know what lurks in your belly button? The Dunn Lab explored different navels to find out.</p>
+            </div>
+        </div>  
+            <div class = "container">      
             <div class = "row">
+                    <img src="{{url_for('static', filename='Images/bacterial_culture.jpg')}}" alt = "bacteria_on_petri_dish"/>
                     <h3>About the Belly Button Biodiversity Project</h3>
                 <div class = "col-md-4">
                     <p>The belly button is teeming with microorganisms! In 2011–2012, North Carolina State University's <a href = "http://robdunnlab.com/projects/belly-button-biodiversity/">Rob Dunn Lab</a> decided to unravel the microbiome mysteries of the navel. It swabbed the belly buttons of hundreds of volunteers. The swabs were plated  </p>
@@ -80,7 +84,7 @@
                 </table>
             </div>
             <div class = "col-md-8">
-                    <img src="{{url_for('static', filename='Images/bacterial_culture.jpg')}}" width = 70%/>
+                    
             </div>
         </div>  
         <hr>  
