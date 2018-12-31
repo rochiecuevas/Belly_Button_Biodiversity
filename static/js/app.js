@@ -43,7 +43,7 @@ d3.json(urlSamples).then(function(trace){
         xaxis: {title: "OTU_ID"},
         yaxis: {
             title: "Frequencies of each OTU_ID",
-            range: [0, 20000]
+            range: [10000, 20000]
         }
     }
 
