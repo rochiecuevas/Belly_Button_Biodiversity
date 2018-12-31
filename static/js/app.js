@@ -55,7 +55,8 @@ d3.json(urlMeta).then(function(trace){
     var data = [trace];
     console.log(data);
 
-    // Create a histogram for age
+    // STATIC CHARTS
+    // (1) histogram for age distribution
     var trace_age = {
         x: data[0]["age"],
         type: "histogram",
@@ -73,7 +74,7 @@ d3.json(urlMeta).then(function(trace){
 
     Plotly.newPlot("hist_age", data_age, layout_age);
 
-    // Create a histogram for wash frequency
+    // (2) histogram for wash frequency distribution
     var trace_wash = {
         x: data[0]["wfreq"],
         type: "histogram",
@@ -93,7 +94,7 @@ d3.json(urlMeta).then(function(trace){
 
     Plotly.newPlot("hist_wash", data_wash, layout_wash);
 
-    // Create a bar graph for males and females
+    // (3) bar graph for number of male and female participants
     var male = [];
     var female = [];
     var gender = data[0]["gender"];
@@ -127,11 +128,11 @@ d3.json(urlMeta).then(function(trace){
 
     Plotly.newPlot("bar_gender", data_gender, layout_gender);    
 
-    // Create a bar graph for events
+    // (4) bar graph for number of participants in the events
     var event = data[0]["sampling_event"];
     console.log(event);
 
-    // Create a function that counts events
+    // (4a) Create a function that counts events
     event_count = {};
     
     for (var j = 0; j < event.length; j ++){
@@ -144,7 +145,7 @@ d3.json(urlMeta).then(function(trace){
         
     console.log(event_count);
     
-    // Create lists of events and counts for the bar graph of events
+    // (4b) Create lists of events and counts for the bar graph of events
     var events = [];
     var counts = [];
    
@@ -162,7 +163,7 @@ d3.json(urlMeta).then(function(trace){
     console.log(counts);
     console.log(events2);
 
-    // Create bar graphs
+    // (4c) Create bar graphs
     var trace_events = {
         x: events2,
         y: counts,
@@ -185,11 +186,11 @@ d3.json(urlMeta).then(function(trace){
 
     Plotly.newPlot("bar_event", data_events, layout_events);
 
-    // Create a bar graph for ethnicities
+    // (5) bar graph for ethnicities
     var ethnicities = data[0]["ethnicity"];
     console.log(ethnicities);
 
-    // Create a function that counts events
+    // (5a) Create a function that counts events
     ethnicity_count = {};
 
     for (var j = 0; j < ethnicities.length; j ++){
@@ -202,7 +203,7 @@ d3.json(urlMeta).then(function(trace){
         
     console.log(ethnicity_count);
 
-    // Create lists of events and counts for the bar graph of events
+    // (5b) Create lists of events and counts for the bar graph of events
     var races = [];
     var raceCounts = [];
 
@@ -214,7 +215,7 @@ d3.json(urlMeta).then(function(trace){
     console.log(races);
     console.log(raceCounts);
 
-    // Create bar graphs
+    // (5c) Create bar graphs
     var trace_ethnicities = {
         x: races,
         y: raceCounts,
@@ -237,6 +238,22 @@ d3.json(urlMeta).then(function(trace){
 
     Plotly.newPlot("bar_ethnicity", data_ethnicities, layout_ethnicities);
 
+    // (6) scatter plot for age vs wash frequency
+    var trace_corr = {
+        x: data[0]["age"],
+        y: data[0]["wfreq"],
+        type: "scatter",
+        mode: "markers"
+    }
+
+    var data_corr = [trace_corr];
+
+    var layout_corr = {
+        xaxis: {title: "Age"},
+        yaxis: {title: "Wash frequency"}
+    }
+
+    Plotly.newPlot("corr", data_corr, layout_corr);
 
     // When a selection has been made
     // Define a variable for sample/participant ID
