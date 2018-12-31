@@ -2,6 +2,7 @@
 var urlSamples = "/samples";
 var urlMeta = "/metadata";
 
+// Create a pie chart
 d3.json(urlSamples).then(function(trace){
     var data = [trace];
     data[0]["type"] = "pie";
@@ -18,6 +19,7 @@ d3.json(urlSamples).then(function(trace){
     Plotly.newPlot("pie", data, layout)
 });
 
+// Create a bubble chart
 d3.json(urlSamples).then(function(trace){
     var data = [trace];
     data[0]["type"] = "scatter";
@@ -39,7 +41,10 @@ d3.json(urlSamples).then(function(trace){
     var layout = {
         title: "Frequencies of the top 20 OTUs",
         xaxis: {title: "OTU_ID"},
-        yaxis: {title: "Frequencies of each OTU_ID"}
+        yaxis: {
+            title: "Frequencies of each OTU_ID",
+            range: [0, 20000]
+        }
     }
 
     Plotly.newPlot("bubble", data, layout)
@@ -81,7 +86,9 @@ d3.json(urlMeta).then(function(trace){
 
     var layout_wash = {
         xaxis: {title: "Washing Frequency"},
-        yaxis: {title: "Frequency"}
+        yaxis: {
+            title: "Frequency"
+        }
     };
 
     Plotly.newPlot("hist_wash", data_wash, layout_wash);
@@ -326,7 +333,9 @@ d3.json(urlMeta).then(function(trace){
             var layout = {
                 title: `Frequencies of the top 20 OTUs in Sample ${selection}`,
                 xaxis: {title: "OTU_ID"},
-                yaxis: {title: "Frequencies of each OTU_ID"}
+                yaxis: {
+                    title: "Frequencies of each OTU_ID"
+                }
             };
         
             Plotly.newPlot("bubble", data, layout)
