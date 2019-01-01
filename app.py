@@ -3,31 +3,38 @@ import pandas as pd
 import numpy as np
 import simplejson
 
+from flask import Flask, request, jsonify, render_template,json
+
+#########################
+# Flask set-up
+app = Flask(__name__)
+#########################
+
+#########################
+# Database set-up
+#########################
+
 # Dependencies for SQL
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect, distinct
+from flask_sqlalchemy import SQLAlchemy
 
-from flask import Flask, request, jsonify, render_template,json
-
-# Create an engine
-engine = create_engine("sqlite:///db/bellybutton.sqlite", echo = False)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/bellybutton.sqlite"
+db = SQLAlchemy(app)
 
 # Create a database model
 Base = automap_base() # Reflect an existing database into a new model
-Base.prepare(engine, reflect = True) # Prepare the database
+Base.prepare(db.engine, reflect = True) # Prepare the database
 Base.classes.keys() # Find all the tables (classes) that automap found
 
 # Save references for each table
 Metadata = Base.classes.sample_metadata
 Samples = Base.classes.samples
 
-# Create a session (link) between Python and the sqlite database
-session = Session(engine)
-
 # Create session query that will load the whole Samples table (all columns)
-qrySamples = session.query(Samples)
+qrySamples = db.session.query(Samples)
 
 # Convert Samples to a pandas dataframe
 df_Samples = pd.read_sql(qrySamples.statement, qrySamples.session.bind)
@@ -37,15 +44,13 @@ df_Samples = df_Samples.dropna()
 df_Samples.head() 
 
 # Create a session query to get data for specific columns of the Metadata table
-qryMeta = session.query(Metadata)
+qryMeta = db.session.query(Metadata)
 
 # Convert the query into a pandas dataframe
 df_Meta = pd.read_sql(qryMeta.statement, qryMeta.session.bind)
 df_Meta["EVENT"] = df_Meta["EVENT"].str.replace("BellyButtons", "") # remove BellyButtons prefix from events
 df_Meta.head()
 
-# Flask set-up
-app = Flask(__name__)
 
 @app.route("/samples")
 def samples():
@@ -136,7 +141,7 @@ def metadata1(sample):
     # Create a session query to get data for specific columns of the Metadata table
     sel = [Metadata.sample, Metadata.ETHNICITY, Metadata.AGE, Metadata.GENDER, Metadata.BBTYPE, Metadata.WFREQ, Metadata.EVENT, Metadata.LOCATION]
 
-    results = session.query(*sel).filter(Metadata.sample == sample).all()
+    results = db.session.query(*sel).filter(Metadata.sample == sample).all()
 
     # Prepare the trace from Metadata for graphs and for JSON
     trace_Meta = {
