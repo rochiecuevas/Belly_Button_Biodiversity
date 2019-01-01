@@ -30,4 +30,5 @@ table {
 
 .jumbotron {
   background-image: url("/static/Images/bacterial_culture.jpg");
+  background-size: cover;
 }
