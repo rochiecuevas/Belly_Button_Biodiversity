@@ -2,3 +2,6 @@
 .DS_Store
 Raw_Data/
 __pycache__/
+templates/index.html
+.ipynb_checkpoints/
+static/js/app1.js
