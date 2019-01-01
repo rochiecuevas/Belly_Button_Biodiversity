@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <!-- CSS>Bootstrap script -->
+    <!-- Bootstrap script -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- CSS script -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
 
     <!-- JavaScript script (d3.js and plotly.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
@@ -18,12 +21,11 @@
         <div class = "jumbotron">
             <div class = "container"> 
                 <h1>{{ message }}</h1>
-                <p>Do you know what lurks in your belly button? The Dunn Lab explored different navels to find out.</p>
+                <p>Do you know what lurks in your belly button? <br>The Dunn Lab explored different navels to find out.</p>
             </div>
         </div>  
             <div class = "container">      
             <div class = "row">
-                    <img src="{{url_for('static', filename='Images/bacterial_culture.jpg')}}" alt = "bacteria_on_petri_dish"/>
                     <h3>About the Belly Button Biodiversity Project</h3>
                 <div class = "col-md-4">
                     <p>The belly button is teeming with microorganisms! </p>
@@ -39,16 +41,16 @@
         <hr>
     <div class = "container">    
         <div class = "row">
-            <div class = "col-md-4">
-                <h3>Select a sample:</h3>
+            <div class = "col-md-4" id = "select_section">
+                <h3>The participants:</h3>
                 <br>
+                <label>More information on Participant No. </label>
                 <select id = "sample">
                     <option id = "All">All</option>
                 </select>
                 <br>
                 <br>
                 <!-- Insert table containing information about the sample -->
-                <p>Some information about the participants</p>
                 <table id = "sample-metadata">
                     <thead>
                         <tr>
@@ -133,6 +135,7 @@
             <div class = "col-md-4">
                 <div id = "hist_wash"></div>
             </div>
+        </div>
         <div class = "row">
             <div class = "col-md-4" >
                 <div id = "bar_event"></div>
@@ -145,11 +148,9 @@
             </div>
         </div>    
             
-        </div>
+        
     </div>
     <!-- More JavaScript and CSS script -->
-    <script src="{{ url_for('static', filename='js/app1.js') }}">
-        document.getElementById("sample-metadata").style.borderColor = "grey";
-    </script>
+    <script src="{{ url_for('static', filename='js/app1.js') }}"></script>
 </body>
 </html>
