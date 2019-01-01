@@ -146,7 +146,7 @@ def metadata1(sample):
         "gender": results[0][3],
         "bbtype": results[0][4],
         "wfreq": results[0][5],
-        "sampling_event": results[0][6],
+        "sampling_event": results[0][6].replace("BellyButtons", ""),
         "location": results[0][7]
     }
 
