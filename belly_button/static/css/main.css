@@ -1,0 +1,34 @@
+#select_section {
+  /* Background styles */
+  border: 5px solid rgb(185, 187, 189);
+  border-radius: 5px;
+  background-color: rgb(185, 187, 189);
+
+  /* Text styles */
+  color: black;
+}
+
+table, td, th {
+  /* Table Styles */
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 100%;
+  background-color: rgb(185, 187, 189);
+
+  /* Text Styles */
+  color: black;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.jumbotron {
+  background-image: url("/static/Images/bacterial_culture.jpg");
+  background-size: cover;
+}
