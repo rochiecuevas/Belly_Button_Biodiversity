@@ -42,8 +42,7 @@ d3.json(urlSamples).then(function(trace){
         title: "Frequencies of the top 20 OTUs",
         xaxis: {title: "OTU_ID"},
         yaxis: {
-            title: "Frequencies of each OTU_ID",
-            range: [10000, 20000]
+            title: "Frequencies of each OTU_ID"
         }
     }
 
@@ -154,18 +153,12 @@ d3.json(urlMeta).then(function(trace){
         counts.push(value);
     });
 
-    var events2 = [];
-    for (var k = 0; k < events.length; k ++){
-        events2.push(events[k].replace("BellyButtons", ""));
-    }
-
     console.log(events);
     console.log(counts);
-    console.log(events2);
 
     // (4c) Create bar graphs
     var trace_events = {
-        x: events2,
+        x: events,
         y: counts,
         type: "bar",
         marker: {
