@@ -41,6 +41,7 @@ qryMeta = session.query(Metadata)
 
 # Convert the query into a pandas dataframe
 df_Meta = pd.read_sql(qryMeta.statement, qryMeta.session.bind)
+df_Meta["EVENT"] = df_Meta["EVENT"].str.replace("BellyButtons", "") # remove BellyButtons prefix from events
 df_Meta.head()
 
 # Flask set-up
