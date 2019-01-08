@@ -79,7 +79,7 @@ def samples():
 @app.route("/samples/<sample>")
 def samples1(sample):
 
-    # Retain only the column corresponding to the selected sample and information about it (top 10 for pie chart)
+    # Retain only the column corresponding to the selected sample and information about it (for bubble chart)
 
     df_sorted = df_Samples[["otu_id", "otu_label",str(sample)]].sort_values(by = [str(sample)], ascending = False)
 
@@ -98,7 +98,7 @@ def samples1(sample):
 
     return jsonify(trace_Samples) 
 
-    # Retain only the column corresponding to the selected sample and information about it (all otu_ids for bar chart)
+    # Retain only the column corresponding to the selected sample and information about it (all otu_ids for pie chart)
 
     df_sorted1 = df_Samples[["otu_id", "otu_label",str(sample)]].sort_values(by = [str(sample)], ascending = False)
 
