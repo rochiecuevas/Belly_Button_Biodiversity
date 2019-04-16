@@ -13,5 +13,5 @@ python-dateutil==2.7.5
 pytz==2018.7
 simplejson==3.16.0
 six==1.12.0
-SQLAlchemy==1.2.15
+SQLAlchemy==1.3.0
 Werkzeug==0.14.1
